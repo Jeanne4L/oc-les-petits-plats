@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Les petits plats</title>
+</head>
+<body>
+    <header>
+        <img src="images/logo.svg" alt="logo">
+    </header>
+
+    <section class="hero">
+        <h1>Cherchez parmi plus de 1500 recettes du quotidien,simples et délicieuses</h1>
+
+        <div class="search-bar">
+            <input type="text" name="search" id="search" placeholder="Rechercher une recette, un ingrédient, ...">
+            <button>
+                <img src="images/icons/search.svg" alt="loupe">
+            </button>
+        </div>
+    </section>
+
+    <main>
+        <div class="container">
+            <div>
+                <div class="filters-dropdowns">
+                    <select name="ingredient" id="ingredient">
+                        <option value="">Ingrédients</option>
+                    </select>
+                    <select name="equipment" id="equipment">
+                        <option value="">Appareils</option>
+                    </select>
+                    <select name="utensil" id="utensil">
+                        <option value="">Ustensiles</option>
+                    </select>
+                </div>
+                <span><span class="recipes-count">1500</span> recettes</span>
+            </div>
+        </div>
+
+        <div class="recipes"></div>
+    </main>
+</body>
+</html>
