@@ -134,6 +134,7 @@ select {
     background-color: #fff;
     display: flex;
     flex-direction: column;
+    margin-bottom: 32px;
 }
 
 .recipes article img {
@@ -188,6 +189,16 @@ select {
         width: 120px;
         margin: 0 24px 0 0;
     }
+
+    .recipes {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .recipes article {
+        width: 48%;
+    }
 }
 
 
@@ -208,6 +219,10 @@ select {
         margin-bottom: 48px;
     }
 
+    .recipes article {
+        margin-bottom: 48px;
+    }
+
     .recipes article img {
         height: 250px;
     }
@@ -220,5 +235,9 @@ select {
 
     .hero {
         height: 600px;
+    }
+
+    .recipes article {
+        width: 30%;
     }
 }
