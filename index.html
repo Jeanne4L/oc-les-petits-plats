@@ -4,27 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Les petits plats</title>
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
-        <img src="images/logo.svg" alt="logo">
+        <div class="container">
+            <img src="images/logo.svg" alt="logo">
+        </div>
     </header>
 
     <section class="hero">
-        <h1>Cherchez parmi plus de 1500 recettes du quotidien,simples et délicieuses</h1>
+        <div class="container">
+            <h1 class="title">Cherchez parmi plus de 1500 recettes du quotidien, simples et délicieuses</h1>
 
-        <div class="search-bar">
-            <input type="text" name="search" id="search" placeholder="Rechercher une recette, un ingrédient, ...">
-            <button>
-                <img src="images/icons/search.svg" alt="loupe">
-            </button>
+            <div class="search-bar">
+                <input type="text" name="search" id="search" placeholder="Rechercher une recette, un ingrédient, ...">
+                <button>
+                    <img src="images/icons/search.svg" alt="loupe">
+                </button>
+            </div>
         </div>
     </section>
 
     <main>
         <div class="container">
-            <div>
-                <div class="filters-dropdowns">
+            <div class="filters-container">
+                <div class="filters">
                     <select name="ingredient" id="ingredient">
                         <option value="">Ingrédients</option>
                     </select>
@@ -35,11 +41,41 @@
                         <option value="">Ustensiles</option>
                     </select>
                 </div>
-                <span><span class="recipes-count">1500</span> recettes</span>
+                <span class="title"><span class="recipes-count">1500</span> recettes</span>
+            </div>
+
+            <div class="recipes">
+                <article>
+                    <img src="images/recipes/Recette01.jpg" alt="repas">
+                    <div class="recipes-description">
+                        <h3>Limonade de coco</h3>
+                        <span class="uppercase">Recette</span>
+                        <p>
+                            Mettre les glaçons à votre goût dans le blender, Ajouter le lait  la crème de coco, le jus de 2 citrons et le sucre ensemble. Mixer jusqu'à obtenir la consistance désirée.
+                        </p>
+                        <span class="uppercase">Ingrédients</span>
+                        <div class="ingredients-container">
+                            <div>
+                                <span>Lait de coco</span>
+                                <span class="quantity">400ml</span>
+                            </div>
+                            <div>
+                                <span>Lait de coco</span>
+                                <span class="quantity">400ml</span>
+                            </div>
+                            <div>
+                                <span>Lait de coco</span>
+                                <span class="quantity">400ml</span>
+                            </div>
+                            <div>
+                                <span>Lait de coco</span>
+                                <span class="quantity">400ml</span>
+                            </div>
+                        </div>
+                    </div>
+                </article>
             </div>
         </div>
-
-        <div class="recipes"></div>
     </main>
 </body>
 </html>
