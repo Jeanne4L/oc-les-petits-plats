@@ -4,7 +4,11 @@ const createRecipeElement = (recipeData) => {
     const img = document.createElement('img');
     img.src = `images/recipes/${recipeData.image}`;
     img.alt = recipeData.name;
-    img.setAttribute('loading', 'lazy')
+    img.setAttribute('loading', 'lazy');
+
+    const timeTag = document.createElement('span');
+    timeTag.classList.add('recipes-tag');
+    timeTag.textContent = `${recipeData.time}min`;
 
     const description = document.createElement('div');
     description.classList.add('recipes-description');
@@ -20,7 +24,7 @@ const createRecipeElement = (recipeData) => {
     p.textContent = recipeData.description;
 
     const secondSubtitle = document.createElement('span');
-    secondSubtitle.classList.add('uppercase');
+    secondSubtitle.classList.add('uppercase', 'recipe-section');
     secondSubtitle.textContent = 'Ingrédients';
 
     const ingredientsContainer = document.createElement('div');
@@ -50,6 +54,7 @@ const createRecipeElement = (recipeData) => {
     description.appendChild(ingredientsContainer);
 
     article.appendChild(img);
+    article.appendChild(timeTag);
     article.appendChild(description);
 
     document.querySelector('.recipes').appendChild(article);
