@@ -18,10 +18,15 @@
         <div class="container">
             <h1 class="title">Cherchez parmi plus de 1500 recettes du quotidien, simples et délicieuses</h1>
 
-            <div class="search-bar">
-                <input type="text" name="search" id="search" placeholder="Rechercher une recette, un ingrédient, ...">
-                <button>
-                    <img src="images/icons/search.svg" alt="loupe">
+            <div class="search-bar hero-search-bar">
+                <input type="text" name="search" id="search" placeholder="Rechercher une recette, un ingrédient ...">
+                <button class="reset-button">
+                    <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M15 15L8.5 8.5M8.5 8.5L2 2M8.5 8.5L15 2M8.5 8.5L2 15" stroke="#7A7A7A" stroke-width="2.16667" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>                    
+                </button>
+                <button class="search-button">
+                    <img src="images/icons/search.svg" alt="chercher">
                 </button>
             </div>
         </div>
@@ -31,23 +36,93 @@
         <div class="container">
             <div class="filters-container">
                 <div class="filters">
-                    <select name="ingredient" id="ingredient">
-                        <option value="">Ingrédients</option>
-                    </select>
-                    <select name="equipment" id="equipment">
-                        <option value="">Appareils</option>
-                    </select>
-                    <select name="utensil" id="utensil">
-                        <option value="">Ustensiles</option>
-                    </select>
+                    <ul class="dropdown" name="ingredient" id="ingredient">
+                        <li>
+                            <span class="dropdown-option">
+                                Ingrédients 
+                                <button class="down-button">
+                                    <img src="images/icons/chevron-down.svg" alt="chevron">
+                                </button>
+                            </span>
+                            <span class="dropdown-option">
+                                <span class="search-bar option-search">
+                                    <input type="text">
+                                    <button class="reset-button">
+                                        <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M15 15L8.5 8.5M8.5 8.5L2 2M8.5 8.5L15 2M8.5 8.5L2 15" stroke="#7A7A7A" stroke-width="2.16667" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </button>
+                                    <button class="search-button">
+                                        <svg width="28" height="29" viewBox="0 0 28 29" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <circle cx="10" cy="10.4219" r="9.5" stroke="white"/>
+                                            <line x1="18.3536" y1="19.0683" x2="27.3536" y2="28.0683" stroke="white"/>
+                                        </svg>                                
+                                    </button>
+                                </span>
+                            </span>
+                        </span>
+                    </ul>
+                    
+                    <ul class="dropdown" name="appliance" id="appliance">
+                        <li>
+                            <span class="dropdown-option">
+                                Appareils
+                                <button class="down-button">
+                                    <img src="images/icons/chevron-down.svg" alt="chevron">
+                                </button>
+                            </span>
+                            <span class="dropdown-option">
+                                <span class="search-bar option-search">
+                                    <input type="text">
+                                    <button class="reset-button">
+                                        <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M15 15L8.5 8.5M8.5 8.5L2 2M8.5 8.5L15 2M8.5 8.5L2 15" stroke="#7A7A7A" stroke-width="2.16667" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </button>
+                                    <button class="search-button">
+                                        <svg width="28" height="29" viewBox="0 0 28 29" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <circle cx="10" cy="10.4219" r="9.5" stroke="white"/>
+                                            <line x1="18.3536" y1="19.0683" x2="27.3536" y2="28.0683" stroke="white"/>
+                                        </svg>                                
+                                    </button>
+                                </span>
+                            </span>
+                        </span>
+                    </ul>
+                    
+                    <ul class="dropdown" name="utensil" id="utensil">
+                        <li>
+                            <span class="dropdown-option">
+                                Ustensiles
+                                <button class="down-button">
+                                    <img src="images/icons/chevron-down.svg" alt="chevron">
+                                </button>
+                            </span>
+                            <span class="dropdown-option">
+                                <span class="search-bar option-search">
+                                    <input type="text">
+                                    <button class="reset-button">
+                                        <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M15 15L8.5 8.5M8.5 8.5L2 2M8.5 8.5L15 2M8.5 8.5L2 15" stroke="#7A7A7A" stroke-width="2.16667" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </button>
+                                    <button class="search-button">
+                                        <svg width="28" height="29" viewBox="0 0 28 29" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <circle cx="10" cy="10.4219" r="9.5" stroke="white"/>
+                                            <line x1="18.3536" y1="19.0683" x2="27.3536" y2="28.0683" stroke="white"/>
+                                        </svg>                                
+                                    </button>
+                                </span>
+                            </span>
+                        </span>
+                    </ul>
                 </div>
-                <span class="title"><span class="recipes-count">1500</span> recettes</span>
+                <span class="title"><span class="recipes-account">1500</span> recettes</span>
             </div>
 
             <div class="recipes"></div>
         </div>
     </main>
-    <script src="recipes.js"></script>
     <script src="js/index.js" type="module"></script>
 </body>
 </html>
