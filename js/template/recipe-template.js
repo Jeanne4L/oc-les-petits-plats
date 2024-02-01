@@ -2,7 +2,7 @@ const createRecipeElement = (recipeData) => {
     const article = document.createElement('article');
 
     const img = document.createElement('img');
-    img.src = `images/recipes/${recipeData.image}`;
+    img.src = `assets/recipes/${recipeData.image}`;
     img.alt = recipeData.name;
     img.setAttribute('loading', 'lazy');
 

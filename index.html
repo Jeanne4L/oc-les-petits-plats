@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Les petits plats</title>
-    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
         <div class="container">
-            <img src="images/logo.svg" alt="logo">
+            <img src="assets/logo.svg" alt="logo">
         </div>
     </header>
 
@@ -18,17 +18,15 @@
         <div class="container">
             <h1 class="title">Cherchez parmi plus de 1500 recettes du quotidien, simples et délicieuses</h1>
 
-            <div class="search-bar hero-search-bar">
-                <input type="text" name="search" id="search" placeholder="Rechercher une recette, un ingrédient ...">
-                <button class="reset-button">
-                    <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M15 15L8.5 8.5M8.5 8.5L2 2M8.5 8.5L15 2M8.5 8.5L2 15" stroke="#7A7A7A" stroke-width="2.16667" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>                    
-                </button>
+            <form class="search-bar hero-search-bar">
+                <input type="search" name="search" id="search" placeholder="Rechercher une recette, un ingrédient ...">
                 <button class="search-button">
-                    <img src="images/icons/search.svg" alt="chercher">
+                    <svg width="28" height="29" viewBox="0 0 28 29" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="10" cy="10.4219" r="9.5" stroke="white"/>
+                        <line x1="18.3536" y1="19.0683" x2="27.3536" y2="28.0683" stroke="white"/>
+                    </svg>
                 </button>
-            </div>
+            </form>
         </div>
     </section>
 
@@ -41,24 +39,19 @@
                             <span class="dropdown-option">
                                 Ingrédients 
                                 <button class="down-button">
-                                    <img src="images/icons/chevron-down.svg" alt="chevron">
+                                    <img src="assets/icons/chevron-down.svg" alt="chevron">
                                 </button>
                             </span>
                             <span class="dropdown-option">
-                                <span class="search-bar option-search">
-                                    <input type="text">
-                                    <button class="reset-button">
-                                        <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M15 15L8.5 8.5M8.5 8.5L2 2M8.5 8.5L15 2M8.5 8.5L2 15" stroke="#7A7A7A" stroke-width="2.16667" stroke-linecap="round" stroke-linejoin="round"/>
-                                        </svg>
-                                    </button>
+                                <form class="search-bar option-search">
+                                    <input type="search">
                                     <button class="search-button">
                                         <svg width="28" height="29" viewBox="0 0 28 29" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <circle cx="10" cy="10.4219" r="9.5" stroke="white"/>
                                             <line x1="18.3536" y1="19.0683" x2="27.3536" y2="28.0683" stroke="white"/>
                                         </svg>                                
                                     </button>
-                                </span>
+                                </form>
                             </span>
                         </span>
                     </ul>
@@ -68,24 +61,19 @@
                             <span class="dropdown-option">
                                 Appareils
                                 <button class="down-button">
-                                    <img src="images/icons/chevron-down.svg" alt="chevron">
+                                    <img src="assets/icons/chevron-down.svg" alt="chevron">
                                 </button>
                             </span>
                             <span class="dropdown-option">
-                                <span class="search-bar option-search">
-                                    <input type="text">
-                                    <button class="reset-button">
-                                        <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M15 15L8.5 8.5M8.5 8.5L2 2M8.5 8.5L15 2M8.5 8.5L2 15" stroke="#7A7A7A" stroke-width="2.16667" stroke-linecap="round" stroke-linejoin="round"/>
-                                        </svg>
-                                    </button>
+                                <form class="search-bar option-search">
+                                    <input type="search">
                                     <button class="search-button">
                                         <svg width="28" height="29" viewBox="0 0 28 29" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <circle cx="10" cy="10.4219" r="9.5" stroke="white"/>
                                             <line x1="18.3536" y1="19.0683" x2="27.3536" y2="28.0683" stroke="white"/>
                                         </svg>                                
                                     </button>
-                                </span>
+                                </form>
                             </span>
                         </span>
                     </ul>
@@ -95,24 +83,19 @@
                             <span class="dropdown-option">
                                 Ustensiles
                                 <button class="down-button">
-                                    <img src="images/icons/chevron-down.svg" alt="chevron">
+                                    <img src="assets/icons/chevron-down.svg" alt="chevron">
                                 </button>
                             </span>
                             <span class="dropdown-option">
-                                <span class="search-bar option-search">
-                                    <input type="text">
-                                    <button class="reset-button">
-                                        <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M15 15L8.5 8.5M8.5 8.5L2 2M8.5 8.5L15 2M8.5 8.5L2 15" stroke="#7A7A7A" stroke-width="2.16667" stroke-linecap="round" stroke-linejoin="round"/>
-                                        </svg>
-                                    </button>
+                                <form class="search-bar option-search">
+                                    <input type="search">
                                     <button class="search-button">
                                         <svg width="28" height="29" viewBox="0 0 28 29" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <circle cx="10" cy="10.4219" r="9.5" stroke="white"/>
                                             <line x1="18.3536" y1="19.0683" x2="27.3536" y2="28.0683" stroke="white"/>
                                         </svg>                                
                                     </button>
-                                </span>
+                                </form>
                             </span>
                         </span>
                     </ul>
