@@ -179,12 +179,12 @@ header .container, .hero {
     padding: 8px 16px;
 }
 
-.dropdown-option:not(.dropdown li:first-of-type .dropdown-option):hover {
+.dropdown-option:not(.dropdown-header .dropdown-option):hover {
     background-color: var(--primary-color);
     cursor: pointer;
 }
 
-.dropdown li:first-of-type {
+.dropdown-header {
     position: sticky;
     background-color: #fff;
     padding-top: 8px;

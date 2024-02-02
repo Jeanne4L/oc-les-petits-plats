@@ -1,3 +1,5 @@
+import compareValueWithDropdownOption from './helpers/compareValueWithDropdownOption.js'
+
 const searchInRecipes = (value, recipes) => {
     const names = new Set(recipes.map(recipe => recipe.name))
     const descriptions = new Set(recipes.map(recipe => recipe.description))
@@ -5,7 +7,7 @@ const searchInRecipes = (value, recipes) => {
     const filteredRecipes = []
 
     for(let name of names) {
-        const searchResult = name.toLowerCase().includes(value.toLowerCase()) ? name : ''
+        const searchResult = compareValueWithDropdownOption(name, value)
 
         if(searchResult !== '') {
             filteredRecipes.push(...recipes.filter(recipe => recipe.name === searchResult))
@@ -13,7 +15,7 @@ const searchInRecipes = (value, recipes) => {
     }
 
     for(let ingredient of ingredients) {
-        const searchResult = ingredient.toLowerCase().includes(value.toLowerCase()) ? ingredient : ''
+        const searchResult = compareValueWithDropdownOption(ingredient, value)
 
         if(searchResult !== '') {
             filteredRecipes.push(...recipes.filter(recipe => recipe.ingredients.some(ingredient => ingredient.ingredient === searchResult)))
@@ -21,7 +23,7 @@ const searchInRecipes = (value, recipes) => {
     }
 
     for(let description of descriptions) {
-        const searchResult = description.toLowerCase().includes(value.toLowerCase()) ? description : ''
+        const searchResult = compareValueWithDropdownOption(description, value)
 
         if(searchResult !== '') {
             filteredRecipes.push(...recipes.filter(recipe => recipe.description === searchResult))

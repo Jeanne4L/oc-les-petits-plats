@@ -1,10 +1,12 @@
 import { recipes } from '../data/recipes.js'
 import recipeTemplate from './template/recipe-template.js'
-import tagTemplate from './template/tag-template.js'
-import searchInRecipes from './search.js'
+import createTagElement from './template/tag-template.js'
+import searchInRecipes from './main-search.js'
+import searchWithKeywords from './keyword-search.js'
 
 const toggleDropdownButtons = document.querySelectorAll('.down-button')
 const mainSearchForm = document.querySelector('#main-search') 
+const options = document.querySelectorAll('.options')
 
 const tagsList = new Set()
 
@@ -23,7 +25,7 @@ const displayDropdownContent = (recipes) => {
 
     ingredients.forEach(ingredient => {
         const option = document.createElement('span')
-        option.classList.add('dropdown-option')
+        option.classList.add('dropdown-option', 'option')
         option.textContent = ingredient
 
         ingredientDropdown.appendChild(option)
@@ -31,7 +33,7 @@ const displayDropdownContent = (recipes) => {
     
     appliances.forEach(appliance => {
         const option = document.createElement('span')
-        option.classList.add('dropdown-option')
+        option.classList.add('dropdown-option', 'option')
         option.textContent = appliance
         
         applianceDropdown.appendChild(option)
@@ -39,7 +41,7 @@ const displayDropdownContent = (recipes) => {
     
     utensils.forEach(utensil => {
         const option = document.createElement('span')
-        option.classList.add('dropdown-option')   
+        option.classList.add('dropdown-option', 'option')   
         option.textContent = utensil
         
         utensilDropdown.appendChild(option)
@@ -81,14 +83,18 @@ mainSearchForm.addEventListener('submit', (e) => {
     displayDropdownContent(filteredRecipes)
 })
 
-const displaySearchTags = (tagsArray) => {
-    tagsArray.forEach(tag => {
-        tagTemplate(tag)
-    }) 
-}
 // TODO display tag when submit
-displaySearchTags(tagsList)
 
+if(options) {
+    options.forEach(option => {
+        console.log(option, option.value)
+        option.addEventListener('click', () => {
+            tagsList.add(option.value)
+            searchWithKeywords(option.value, recipes)
+            createTagElement(option.value)
+        })
+    })
+}
 const tagButtons = document.querySelectorAll('.tag button')
 
 if(tagButtons) {
@@ -99,6 +105,9 @@ if(tagButtons) {
 
             tagsList.delete(tagValue)
             tag.remove()
+            tagsList.forEach(tag => {
+                searchWithKeywords(tag, recipes)
+            })
         })
     })
 }
