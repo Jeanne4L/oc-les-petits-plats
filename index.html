@@ -18,9 +18,9 @@
         <div class="container">
             <h1 class="title">Cherchez parmi plus de 1500 recettes du quotidien, simples et délicieuses</h1>
 
-            <form class="search-bar hero-search-bar">
-                <input type="search" name="search" id="search" placeholder="Rechercher une recette, un ingrédient ...">
-                <button class="search-button">
+            <form id="main-search" class="search-bar hero-search-bar">
+                <input type="search" name="search" id="main-search-input" placeholder="Rechercher une recette, un ingrédient ...">
+                <button class="search-button" type="submit">
                     <svg width="28" height="29" viewBox="0 0 28 29" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="10" cy="10.4219" r="9.5" stroke="white"/>
                         <line x1="18.3536" y1="19.0683" x2="27.3536" y2="28.0683" stroke="white"/>
@@ -34,8 +34,8 @@
         <div class="container">
             <div class="filters-container">
                 <div class="filters">
-                    <ul class="dropdown" name="ingredient" id="ingredient">
-                        <li>
+                    <ul class="dropdown">
+                        <li class="dropdown-header">
                             <span class="dropdown-option">
                                 Ingrédients 
                                 <button class="down-button">
@@ -53,11 +53,12 @@
                                     </button>
                                 </form>
                             </span>
-                        </span>
+                        </li>
+                        <ul id="ingredient"></ul>
                     </ul>
                     
-                    <ul class="dropdown" name="appliance" id="appliance">
-                        <li>
+                    <ul class="dropdown">
+                        <li class="dropdown-header">
                             <span class="dropdown-option">
                                 Appareils
                                 <button class="down-button">
@@ -75,11 +76,12 @@
                                     </button>
                                 </form>
                             </span>
-                        </span>
+                        </li>
+                        <ul id="appliance"></ul>
                     </ul>
                     
-                    <ul class="dropdown" name="utensil" id="utensil">
-                        <li>
+                    <ul class="dropdown">
+                        <li class="dropdown-header">
                             <span class="dropdown-option">
                                 Ustensiles
                                 <button class="down-button">
@@ -97,7 +99,8 @@
                                     </button>
                                 </form>
                             </span>
-                        </span>
+                        </li>
+                        <ul id="utensil"></ul>
                     </ul>
                 </div>
                 <span class="title"><span class="recipes-account">1500</span> recettes</span>

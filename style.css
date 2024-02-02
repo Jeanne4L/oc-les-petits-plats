@@ -411,13 +411,9 @@ header .container, .hero {
     }
 
     .recipes {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-    }
-
-    .recipes article {
-        width: 48%;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
     }
 }
 
@@ -468,7 +464,8 @@ header .container, .hero {
         height: 600px;
     }
 
-    .recipes article {
-        width: 30%;
+    .recipes {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 32px;
     }
 }

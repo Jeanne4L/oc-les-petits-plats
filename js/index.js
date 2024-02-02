@@ -1,18 +1,25 @@
 import { recipes } from '../data/recipes.js'
 import recipeTemplate from './template/recipe-template.js'
 import tagTemplate from './template/tag-template.js'
+import searchInRecipes from './search.js'
 
 const toggleDropdownButtons = document.querySelectorAll('.down-button')
+const mainSearchForm = document.querySelector('#main-search') 
 
-const ingredients = new Set(recipes.flatMap(recipe => recipe.ingredients.map(ingredient => ingredient.ingredient)))
-const appliances = new Set(recipes.map(recipe => recipe.appliance))
-const utensils = new Set(recipes.flatMap(recipe => recipe.utensils))
 const tagsList = new Set()
 
-const displayDropdownContent = () => {
+const displayDropdownContent = (recipes) => {
+    const ingredients = new Set(recipes.flatMap(recipe => recipe.ingredients.map(ingredient => ingredient.ingredient)))
+    const appliances = new Set(recipes.map(recipe => recipe.appliance))
+    const utensils = new Set(recipes.flatMap(recipe => recipe.utensils))
+
     const ingredientDropdown = document.querySelector('#ingredient');
     const applianceDropdown = document.querySelector('#appliance');
     const utensilDropdown = document.querySelector('#utensil');
+
+    ingredientDropdown.innerHTML = ''
+    applianceDropdown.innerHTML = ''
+    utensilDropdown.innerHTML = ''
 
     ingredients.forEach(ingredient => {
         const option = document.createElement('span')
@@ -21,29 +28,31 @@ const displayDropdownContent = () => {
 
         ingredientDropdown.appendChild(option)
     })
-
+    
     appliances.forEach(appliance => {
         const option = document.createElement('span')
         option.classList.add('dropdown-option')
         option.textContent = appliance
-
+        
         applianceDropdown.appendChild(option)
     })
-
+    
     utensils.forEach(utensil => {
         const option = document.createElement('span')
         option.classList.add('dropdown-option')   
         option.textContent = utensil
-
+        
         utensilDropdown.appendChild(option)
     })
 }
 
-const displayRecipesAccount = () => {
+const displayRecipesAccount = (recipes) => {
     document.querySelector('.recipes-account').textContent = recipes.length
 }
 
-const displayRecipesElements = () => {
+const displayRecipesElements = (recipes) => {
+    document.querySelector('.recipes').innerHTML = ''
+
     recipes.forEach((recipe) => {
         recipeTemplate(recipe)
     })
@@ -60,6 +69,17 @@ const toggleDropdown = () => {
     })
 }
 
+mainSearchForm.addEventListener('submit', (e) => {
+    e.preventDefault()
+
+    const input = mainSearchForm.querySelector('input')
+
+    const filteredRecipes = searchInRecipes(input.value, recipes)
+
+    displayRecipesElements(filteredRecipes)
+    displayRecipesAccount(filteredRecipes)
+    displayDropdownContent(filteredRecipes)
+})
 
 const displaySearchTags = (tagsArray) => {
     tagsArray.forEach(tag => {
@@ -84,9 +104,9 @@ if(tagButtons) {
 }
 
 const displayRecipeData = () => {
-    displayRecipesElements()
-    displayRecipesAccount()
-    displayDropdownContent()
+    displayRecipesElements(recipes)
+    displayRecipesAccount(recipes)
+    displayDropdownContent(recipes)
     
     toggleDropdown()
 }
