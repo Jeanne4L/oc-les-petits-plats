@@ -54,8 +54,8 @@ const displayDropdownContent = (recipes) => {
 	});
 };
 
-const displayRecipesAccount = (recipes) => {
-	document.querySelector('.recipes-account').textContent = `${
+const displayRecipesamount = (recipes) => {
+	document.querySelector('.recipes-amount').textContent = `${
 		recipes.length
 	} recette${recipes.length >= 2 ? 's' : ''}`;
 };
@@ -130,7 +130,7 @@ const mainSearch = () => {
 			filteredRecipes = searchInRecipes(searchText, recipes);
 
 			displayRecipesElements(filteredRecipes);
-			displayRecipesAccount(filteredRecipes);
+			displayRecipesamount(filteredRecipes);
 			displayDropdownContent(filteredRecipes);
 		}
 	});
@@ -151,7 +151,7 @@ const keywordsSearch = () => {
 				filteredRecipes = searchByKeywords(tagsList, filteredRecipes);
 
 				displayRecipesElements(filteredRecipes);
-				displayRecipesAccount(filteredRecipes);
+				displayRecipesamount(filteredRecipes);
 				displayDropdownContent(filteredRecipes);
 			}
 		});
@@ -160,7 +160,7 @@ const keywordsSearch = () => {
 
 const displayRecipeData = () => {
 	displayRecipesElements(recipes);
-	displayRecipesAccount(recipes);
+	displayRecipesamount(recipes);
 	displayDropdownContent(recipes);
 
 	toggleDropdown();

@@ -1,116 +1,174 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Les petits plats</title>
-    <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <header>
-        <div class="container">
-            <img src="assets/logo.svg" alt="logo">
-        </div>
-    </header>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Les petits plats</title>
+		<link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon" />
+		<link rel="stylesheet" href="style.css" />
+	</head>
+	<body>
+		<header>
+			<div class="container">
+				<img src="assets/logo.svg" alt="logo" />
+			</div>
+		</header>
 
-    <section class="hero">
-        <div class="container">
-            <h1 class="title">Cherchez parmi plus de 1500 recettes du quotidien, simples et délicieuses</h1>
+		<section class="hero">
+			<div class="container">
+				<h1 class="title">
+					Cherchez parmi plus de 1500 recettes du quotidien, simples et
+					délicieuses
+				</h1>
 
-            <form id="main-search" class="search-bar hero-search-bar">
-                <input type="search" name="search" id="main-search-input" placeholder="Rechercher une recette, un ingrédient ...">
-                <button class="search-button" type="submit">
-                    <svg width="28" height="29" viewBox="0 0 28 29" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="10" cy="10.4219" r="9.5" stroke="white"/>
-                        <line x1="18.3536" y1="19.0683" x2="27.3536" y2="28.0683" stroke="white"/>
-                    </svg>
-                </button>
-            </form>
-        </div>
-    </section>
+				<form id="main-search" class="search-bar hero-search-bar">
+					<input
+						type="search"
+						name="search"
+						id="main-search-input"
+						placeholder="Rechercher une recette, un ingrédient ..."
+					/>
+					<button class="search-button" type="submit">
+						<svg
+							width="28"
+							height="29"
+							viewBox="0 0 28 29"
+							fill="none"
+							xmlns="http://www.w3.org/2000/svg"
+						>
+							<circle cx="10" cy="10.4219" r="9.5" stroke="white" />
+							<line
+								x1="18.3536"
+								y1="19.0683"
+								x2="27.3536"
+								y2="28.0683"
+								stroke="white"
+							/>
+						</svg>
+					</button>
+				</form>
+			</div>
+		</section>
 
-    <main>
-        <div class="container">
-            <div class="filters-container">
-                <div class="filters">
-                    <ul class="dropdown">
-                        <li class="dropdown-header">
-                            <span class="dropdown-option">
-                                Ingrédients 
-                                <button class="down-button">
-                                    <img src="assets/icons/chevron-down.svg" alt="chevron">
-                                </button>
-                            </span>
-                            <span class="dropdown-option">
-                                <form class="search-bar option-search">
-                                    <input type="search">
-                                    <button class="search-button">
-                                        <svg width="28" height="29" viewBox="0 0 28 29" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <circle cx="10" cy="10.4219" r="9.5" stroke="white"/>
-                                            <line x1="18.3536" y1="19.0683" x2="27.3536" y2="28.0683" stroke="white"/>
-                                        </svg>                                
-                                    </button>
-                                </form>
-                            </span>
-                        </li>
-                        <ul id="ingredient"></ul>
-                    </ul>
-                    
-                    <ul class="dropdown">
-                        <li class="dropdown-header">
-                            <span class="dropdown-option">
-                                Appareils
-                                <button class="down-button">
-                                    <img src="assets/icons/chevron-down.svg" alt="chevron">
-                                </button>
-                            </span>
-                            <span class="dropdown-option">
-                                <form class="search-bar option-search">
-                                    <input type="search">
-                                    <button class="search-button">
-                                        <svg width="28" height="29" viewBox="0 0 28 29" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <circle cx="10" cy="10.4219" r="9.5" stroke="white"/>
-                                            <line x1="18.3536" y1="19.0683" x2="27.3536" y2="28.0683" stroke="white"/>
-                                        </svg>                                
-                                    </button>
-                                </form>
-                            </span>
-                        </li>
-                        <ul id="appliance"></ul>
-                    </ul>
-                    
-                    <ul class="dropdown">
-                        <li class="dropdown-header">
-                            <span class="dropdown-option">
-                                Ustensiles
-                                <button class="down-button">
-                                    <img src="assets/icons/chevron-down.svg" alt="chevron">
-                                </button>
-                            </span>
-                            <span class="dropdown-option">
-                                <form class="search-bar option-search">
-                                    <input type="search">
-                                    <button class="search-button">
-                                        <svg width="28" height="29" viewBox="0 0 28 29" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <circle cx="10" cy="10.4219" r="9.5" stroke="white"/>
-                                            <line x1="18.3536" y1="19.0683" x2="27.3536" y2="28.0683" stroke="white"/>
-                                        </svg>                                
-                                    </button>
-                                </form>
-                            </span>
-                        </li>
-                        <ul id="utensil"></ul>
-                    </ul>
-                </div>
-                <span class="title"><span class="recipes-account">1500</span> recettes</span>
-            </div>
+		<main>
+			<div class="container">
+				<div class="filters-container">
+					<div class="filters">
+						<ul class="dropdown">
+							<li class="dropdown-header">
+								<span class="dropdown-option">
+									Ingrédients
+									<button class="down-button">
+										<img src="assets/icons/chevron-down.svg" alt="chevron" />
+									</button>
+								</span>
+								<span class="dropdown-option">
+									<form class="search-bar option-search">
+										<input type="search" />
+										<button class="search-button">
+											<svg
+												width="28"
+												height="29"
+												viewBox="0 0 28 29"
+												fill="none"
+												xmlns="http://www.w3.org/2000/svg"
+											>
+												<circle cx="10" cy="10.4219" r="9.5" stroke="white" />
+												<line
+													x1="18.3536"
+													y1="19.0683"
+													x2="27.3536"
+													y2="28.0683"
+													stroke="white"
+												/>
+											</svg>
+										</button>
+									</form>
+								</span>
+							</li>
+							<ul id="ingredient"></ul>
+						</ul>
 
-            <div class="tags-container"></div>
+						<ul class="dropdown">
+							<li class="dropdown-header">
+								<span class="dropdown-option">
+									Appareils
+									<button class="down-button">
+										<img src="assets/icons/chevron-down.svg" alt="chevron" />
+									</button>
+								</span>
+								<span class="dropdown-option">
+									<form class="search-bar option-search">
+										<input type="search" />
+										<button class="search-button">
+											<svg
+												width="28"
+												height="29"
+												viewBox="0 0 28 29"
+												fill="none"
+												xmlns="http://www.w3.org/2000/svg"
+											>
+												<circle cx="10" cy="10.4219" r="9.5" stroke="white" />
+												<line
+													x1="18.3536"
+													y1="19.0683"
+													x2="27.3536"
+													y2="28.0683"
+													stroke="white"
+												/>
+											</svg>
+										</button>
+									</form>
+								</span>
+							</li>
+							<ul id="appliance"></ul>
+						</ul>
 
-            <div class="recipes"></div>
-        </div>
-    </main>
-    <script src="js/index.js" type="module"></script>
-</body>
+						<ul class="dropdown">
+							<li class="dropdown-header">
+								<span class="dropdown-option">
+									Ustensiles
+									<button class="down-button">
+										<img src="assets/icons/chevron-down.svg" alt="chevron" />
+									</button>
+								</span>
+								<span class="dropdown-option">
+									<form class="search-bar option-search">
+										<input type="search" />
+										<button class="search-button">
+											<svg
+												width="28"
+												height="29"
+												viewBox="0 0 28 29"
+												fill="none"
+												xmlns="http://www.w3.org/2000/svg"
+											>
+												<circle cx="10" cy="10.4219" r="9.5" stroke="white" />
+												<line
+													x1="18.3536"
+													y1="19.0683"
+													x2="27.3536"
+													y2="28.0683"
+													stroke="white"
+												/>
+											</svg>
+										</button>
+									</form>
+								</span>
+							</li>
+							<ul id="utensil"></ul>
+						</ul>
+					</div>
+					<span class="recipes-amount"
+						><span class="recipes-amount">1500</span> recettes</span
+					>
+				</div>
+
+				<div class="tags-container"></div>
+
+				<div class="recipes"></div>
+			</div>
+		</main>
+		<script src="js/index.js" type="module"></script>
+	</body>
 </html>
