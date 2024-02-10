@@ -2,13 +2,15 @@ import { recipes } from '../data/recipes.js';
 import recipeTemplate from './template/recipe.js';
 import createTagElement from './template/tag.js';
 import searchInRecipes from './main-search.js';
-import searchWithKeywords from './keyword-search.js';
+import searchByKeywords from './keyword-search.js';
 
 const toggleDropdownButtons = document.querySelectorAll('.down-button');
 const mainSearchForm = document.querySelector('#main-search');
+const mainSearchInput = mainSearchForm.querySelector('input');
 const tagsContainer = document.querySelector('.tags-container');
 
 const tagsList = new Set();
+let filteredRecipes = recipes.slice();
 
 const displayDropdownContent = (recipes) => {
 	const ingredients = new Set(
@@ -53,7 +55,9 @@ const displayDropdownContent = (recipes) => {
 };
 
 const displayRecipesAccount = (recipes) => {
-	document.querySelector('.recipes-account').textContent = recipes.length;
+	document.querySelector('.recipes-account').textContent = `${
+		recipes.length
+	} recette${recipes.length >= 2 ? 's' : ''}`;
 };
 
 const displayRecipesElements = (recipes) => {
@@ -93,34 +97,66 @@ const toggleDropdown = () => {
 	});
 };
 
-mainSearchForm.addEventListener('submit', (e) => {
-	e.preventDefault();
+const toggleTags = () => {
+	const tagButtons = document.querySelectorAll('.tag button');
 
-	const input = mainSearchForm.querySelector('input');
+	if (tagButtons) {
+		tagButtons.forEach((button) => {
+			button.addEventListener('click', () => {
+				const tag = button.closest('.tag');
+				const tagValue = tag.querySelector('.tag-value').value;
 
-	const filteredRecipes = searchInRecipes(input.value, recipes);
-
-	displayRecipesElements(filteredRecipes);
-	displayRecipesAccount(filteredRecipes);
-	displayDropdownContent(filteredRecipes);
-});
-
-const tagButtons = document.querySelectorAll('.tag button');
-
-if (tagButtons) {
-	tagButtons.forEach((button) => {
-		button.addEventListener('click', () => {
-			const tag = button.closest('.tag');
-			const tagValue = tag.querySelector('.tag-value').value;
-
-			tagsList.delete(tagValue);
-			tag.remove();
-			tagsList.forEach((tag) => {
-				searchWithKeywords(tag, recipes);
+				tagsList.delete(tagValue);
+				tag.remove();
+				tagsList.forEach((tag) => {
+					searchByKeywords(tag, recipes);
+				});
 			});
 		});
+	}
+};
+
+const mainSearch = () => {
+	mainSearchForm.addEventListener('submit', (e) => e.preventDefault());
+
+	mainSearchInput.addEventListener('input', (e) => {
+		let searchText;
+
+		if (e.target.value.length < 3) {
+			searchText = '';
+		} else {
+			searchText = e.target.value;
+
+			filteredRecipes = searchInRecipes(searchText, recipes);
+
+			displayRecipesElements(filteredRecipes);
+			displayRecipesAccount(filteredRecipes);
+			displayDropdownContent(filteredRecipes);
+		}
 	});
-}
+};
+
+const keywordsSearch = () => {
+	const dropdowns = document.querySelectorAll('.dropdown');
+
+	dropdowns.forEach((dropdown) => {
+		dropdown.addEventListener('click', (e) => {
+			if (e.target.classList.contains('option')) {
+				const optionText = e.target.innerText;
+
+				tagsList.add(optionText);
+				tagsContainer.innerHTML = '';
+				tagsList.forEach((tag) => createTagElement(tag));
+
+				filteredRecipes = searchByKeywords(tagsList, filteredRecipes);
+
+				displayRecipesElements(filteredRecipes);
+				displayRecipesAccount(filteredRecipes);
+				displayDropdownContent(filteredRecipes);
+			}
+		});
+	});
+};
 
 const displayRecipeData = () => {
 	displayRecipesElements(recipes);
@@ -128,20 +164,9 @@ const displayRecipeData = () => {
 	displayDropdownContent(recipes);
 
 	toggleDropdown();
+	toggleTags();
 
-	const options = document.querySelectorAll('.option');
-
-	if (options) {
-		options.forEach((option) => {
-			option.addEventListener('click', () => {
-				const optionText = option.innerText;
-				tagsList.add(optionText);
-				searchWithKeywords(optionText, recipes);
-
-				tagsContainer.innerHTML = '';
-				tagsList.forEach((tag) => createTagElement(tag));
-			});
-		});
-	}
+	mainSearch();
+	keywordsSearch();
 };
 displayRecipeData();

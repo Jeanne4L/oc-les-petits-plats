@@ -1,36 +1,53 @@
-import compareValueWithDropdownOption from './helpers/compareValueWithDropdownOption.js'
+const searchInRecipes = (searchText, recipes, tags) => {
+	const filteredRecipes = [];
 
-const searchInRecipes = (value, recipes) => {
-    const names = new Set(recipes.map(recipe => recipe.name))
-    const descriptions = new Set(recipes.map(recipe => recipe.description))
-    const ingredients = new Set(recipes.flatMap(recipe => recipe.ingredients.map(ingredient => ingredient.ingredient)))
-    const filteredRecipes = []
+	if (searchText !== '') {
+		const searchTextToLowerCase = searchText.toLowerCase();
 
-    for(let name of names) {
-        const searchResult = compareValueWithDropdownOption(name, value)
+		filteredRecipes.push(
+			...recipes.filter((recipe) => {
+				const isFoundInName =
+					recipe.name &&
+					recipe.name.toLowerCase().includes(searchTextToLowerCase);
+				const isFoundInDescription =
+					recipe.description &&
+					recipe.description.toLowerCase().includes(searchTextToLowerCase);
+				const isFoundInIngredients =
+					recipe.ingredients &&
+					recipe.ingredients.some((ingredient) =>
+						ingredient.ingredient.toLowerCase().includes(searchTextToLowerCase)
+					);
 
-        if(searchResult !== '') {
-            filteredRecipes.push(...recipes.filter(recipe => recipe.name === searchResult))
-        }
-    }
+				return isFoundInName || isFoundInDescription || isFoundInIngredients;
+			})
+		);
 
-    for(let ingredient of ingredients) {
-        const searchResult = compareValueWithDropdownOption(ingredient, value)
+		if (tags) {
+			tags.forEach((tag) => {
+				filteredRecipes.push(
+					...recipes.filter((recipe) => {
+						const tagToLowerCase = tag.toLowerCase();
+						const isFoundInName =
+							recipe.name && recipe.name.toLowerCase().includes(tagToLowerCase);
+						const isFoundInDescription =
+							recipe.description &&
+							recipe.description.toLowerCase().includes(tagToLowerCase);
+						const isFoundInIngredients =
+							recipe.ingredients &&
+							recipe.ingredients.some((ingredient) =>
+								ingredient.ingredient.toLowerCase().includes(tagToLowerCase)
+							);
 
-        if(searchResult !== '') {
-            filteredRecipes.push(...recipes.filter(recipe => recipe.ingredients.some(ingredient => ingredient.ingredient === searchResult)))
-        }
-    }
+						return (
+							isFoundInName || isFoundInDescription || isFoundInIngredients
+						);
+					})
+				);
+			});
+		}
+	}
 
-    for(let description of descriptions) {
-        const searchResult = compareValueWithDropdownOption(description, value)
+	return Array.from(new Set(filteredRecipes)).flat();
+};
 
-        if(searchResult !== '') {
-            filteredRecipes.push(...recipes.filter(recipe => recipe.description === searchResult))
-        }
-    }
-
-    return Array.from(new Set(filteredRecipes)).flat()
-}
-
-export default searchInRecipes
+export default searchInRecipes;
