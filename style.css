@@ -369,6 +369,18 @@ header .container,
 	margin-top: 8px;
 }
 
+.not-found {
+	text-align: center;
+}
+
+.not-found .search {
+	font-weight: var(--text-bold);
+}
+
+.hidden {
+	display: none;
+}
+
 @media (min-width: 600px) {
 	.filters-container {
 		flex-direction: row;

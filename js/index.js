@@ -81,12 +81,15 @@ const displayRecipesAmount = (recipes) => {
 };
 
 const displayRecipesElements = (recipes) => {
-	document.querySelector('.recipes').innerHTML = '';
+	const recipesContainer = document.querySelector('.recipes');
+	recipesContainer.innerHTML = '';
 
-	if (recipes.length === 0) {
-		const message = document.createElement('p');
-		message.innerText = `Aucune recette ne contient ${tagsList.tagsList} ou ${searchText} vous pouvez chercher "
-        tarte aux pommes ", " poisson ", etc.`;
+	if (!recipes.length) {
+		const message = document.querySelector('.not-found');
+		const searchElt = document.querySelector('.search');
+
+		message.classList.remove('hidden');
+		searchElt.innerText = searchText;
 	}
 	recipes.forEach((recipe) => {
 		recipeTemplate(recipe);
