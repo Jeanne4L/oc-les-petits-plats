@@ -2,12 +2,16 @@ import { recipes } from '../data/recipes.js';
 import recipeTemplate from './template/recipe.js';
 import createTagElement from './template/tag.js';
 import capitalizeWords from './helpers/capitalizeWords.js';
-import searchInRecipes from './main-search.js';
+import searchInRecipes from './utils/searchInRecipes.js';
+import searchInDropdownOptions from './utils/searchInDropdownOptions.js';
 
-const toggleDropdownButtons = document.querySelectorAll('.down-button');
 const mainSearchForm = document.querySelector('#main-search');
 const mainSearchInput = mainSearchForm.querySelector('input');
 const tagsContainer = document.querySelector('.tags-container');
+const toggleDropdownButtons = document.querySelectorAll('.down-button');
+const ingredientDropdown = document.querySelector('#ingredient');
+const applianceDropdown = document.querySelector('#appliance');
+const utensilDropdown = document.querySelector('#utensil');
 
 let searchText = '';
 const tagsList = {
@@ -16,6 +20,25 @@ const tagsList = {
 	utensil: [],
 };
 let filteredRecipes = recipes.slice();
+let filteredOptions;
+
+const filterArrayByTags = (arrayToFilter, tagsArray) => {
+	return Array.from(arrayToFilter).filter(
+		(element) => !tagsList[tagsArray].includes(capitalizeWords(element))
+	);
+};
+
+const createDropdownContent = (elementsToDisplay, dropdown) => {
+	dropdown.innerHTML = '';
+
+	elementsToDisplay.forEach((element) => {
+		const option = document.createElement('span');
+		option.classList.add('dropdown-option', 'option');
+		option.textContent = element;
+
+		dropdown.appendChild(option);
+	});
+};
 
 const displayDropdownContent = (recipes) => {
 	let ingredients = new Set(
@@ -23,55 +46,19 @@ const displayDropdownContent = (recipes) => {
 			recipe.ingredients.map((ingredient) => ingredient.ingredient)
 		)
 	);
-
-	ingredients = Array.from(ingredients).filter(
-		(ingredient) =>
-			!tagsList['ingredient'].includes(capitalizeWords(ingredient))
-	);
+	ingredients = filterArrayByTags(ingredients, 'ingredient');
 
 	let appliances = new Set(recipes.map((recipe) => recipe.appliance));
-
-	appliances = Array.from(appliances).filter(
-		(appliance) => !tagsList['appliance'].includes(capitalizeWords(appliance))
-	);
+	appliances = filterArrayByTags(appliances, 'appliance');
 
 	let utensils = new Set(recipes.flatMap((recipe) => recipe.utensils));
+	utensils = filterArrayByTags(utensils, 'utensil');
 
-	utensils = Array.from(utensils).filter(
-		(utensil) => !tagsList['utensil'].includes(capitalizeWords(utensil))
-	);
+	createDropdownContent(ingredients, ingredientDropdown);
+	createDropdownContent(appliances, applianceDropdown);
+	createDropdownContent(utensils, utensilDropdown);
 
-	const ingredientDropdown = document.querySelector('#ingredient');
-	const applianceDropdown = document.querySelector('#appliance');
-	const utensilDropdown = document.querySelector('#utensil');
-
-	ingredientDropdown.innerHTML = '';
-	applianceDropdown.innerHTML = '';
-	utensilDropdown.innerHTML = '';
-
-	ingredients.forEach((ingredient) => {
-		const option = document.createElement('span');
-		option.classList.add('dropdown-option', 'option');
-		option.textContent = ingredient;
-
-		ingredientDropdown.appendChild(option);
-	});
-
-	appliances.forEach((appliance) => {
-		const option = document.createElement('span');
-		option.classList.add('dropdown-option', 'option');
-		option.textContent = appliance;
-
-		applianceDropdown.appendChild(option);
-	});
-
-	utensils.forEach((utensil) => {
-		const option = document.createElement('span');
-		option.classList.add('dropdown-option', 'option');
-		option.textContent = utensil;
-
-		utensilDropdown.appendChild(option);
-	});
+	filterRecipesWithKeywords();
 };
 
 const displayRecipesAmount = (recipes) => {
@@ -106,7 +93,19 @@ const toggleDropdown = () => {
 	toggleDropdownButtons.forEach((button) => {
 		button.addEventListener('click', (e) => {
 			e.stopPropagation();
+
 			const dropdown = button.closest('.dropdown');
+			const openDropdowns = document.querySelectorAll('.expanded-dropdown');
+
+			openDropdowns.forEach((openDropdown) => {
+				if (openDropdown !== dropdown) {
+					openDropdown.classList.remove('expanded-dropdown');
+					const openButton = openDropdown.querySelector('.top-button');
+					if (openButton) {
+						openButton.classList.remove('top-button');
+					}
+				}
+			});
 
 			button.classList.contains('top-button')
 				? button.classList.remove('top-button')
@@ -120,8 +119,18 @@ const toggleDropdown = () => {
 	const dropdowns = document.querySelectorAll('.dropdown');
 
 	dropdowns.forEach((dropdown) => {
-		document.body.addEventListener('click', () => {
-			if (dropdown.classList.contains('expanded-dropdown')) {
+		document.body.addEventListener('click', (e) => {
+			const id = e.target.id;
+			const idList = [
+				'search-ingredient',
+				'search-appliance',
+				'search-utensil',
+			];
+
+			if (
+				dropdown.classList.contains('expanded-dropdown') &&
+				!idList.includes(id)
+			) {
 				dropdown.classList.remove('expanded-dropdown');
 
 				const button = dropdown.querySelector('.top-button');
@@ -129,6 +138,45 @@ const toggleDropdown = () => {
 			}
 		});
 	});
+};
+
+const filterDropdownOptions = () => {
+	const ingredientInput = document.querySelector('#search-ingredient');
+	const applianceInput = document.querySelector('#search-appliance');
+	const utensilInput = document.querySelector('#search-utensil');
+
+	const filterOptions = (e) => {
+		const id = e.target.id;
+
+		const ingredients = new Set(
+			recipes.flatMap((recipe) =>
+				recipe.ingredients.map((ingredient) => ingredient.ingredient)
+			)
+		);
+		const appliances = new Set(recipes.map((recipe) => recipe.appliance));
+		const utensils = new Set(recipes.flatMap((recipe) => recipe.utensils));
+
+		switch (id) {
+			case 'search-ingredient':
+				filteredOptions = searchInDropdownOptions(e.target.value, ingredients);
+				createDropdownContent(filteredOptions, ingredientDropdown);
+				break;
+			case 'search-appliance':
+				filteredOptions = searchInDropdownOptions(e.target.value, appliances);
+				createDropdownContent(filteredOptions, applianceDropdown);
+				break;
+			case 'search-utensil':
+				filteredOptions = searchInDropdownOptions(e.target.value, utensils);
+				createDropdownContent(filteredOptions, utensilDropdown);
+				break;
+			default:
+				return;
+		}
+	};
+
+	ingredientInput.addEventListener('input', (e) => filterOptions(e));
+	applianceInput.addEventListener('input', (e) => filterOptions(e));
+	utensilInput.addEventListener('input', (e) => filterOptions(e));
 };
 
 const removeTags = () => {
@@ -154,7 +202,7 @@ const removeTags = () => {
 	});
 };
 
-const mainSearch = () => {
+const filterRecipesWithMainSearchBar = () => {
 	mainSearchForm.addEventListener('submit', (e) => e.preventDefault());
 
 	mainSearchInput.addEventListener('input', (e) => {
@@ -170,7 +218,7 @@ const mainSearch = () => {
 	});
 };
 
-const keywordsSearch = () => {
+const filterRecipesWithKeywords = () => {
 	const dropdowns = document.querySelectorAll('.dropdown');
 
 	dropdowns.forEach((dropdown) => {
@@ -178,6 +226,7 @@ const keywordsSearch = () => {
 			if (e.target.classList.contains('option')) {
 				const option = e.target;
 				const optionText = option.innerText;
+				console.log(option.closest('ul'));
 				const dropdownCategory = option.closest('ul').id;
 
 				tagsList[dropdownCategory].push(optionText);
@@ -205,5 +254,6 @@ const keywordsSearch = () => {
 
 displayRecipeData(recipes);
 toggleDropdown();
-mainSearch();
-keywordsSearch();
+filterDropdownOptions();
+filterRecipesWithMainSearchBar();
+// filterRecipesWithKeywords();
