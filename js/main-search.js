@@ -1,53 +1,55 @@
-const searchInRecipes = (searchText, recipes, tags) => {
-	const filteredRecipes = [];
-
-	if (searchText !== '') {
-		const searchTextToLowerCase = searchText.toLowerCase();
-
-		filteredRecipes.push(
-			...recipes.filter((recipe) => {
-				const isFoundInName =
-					recipe.name &&
-					recipe.name.toLowerCase().includes(searchTextToLowerCase);
-				const isFoundInDescription =
-					recipe.description &&
-					recipe.description.toLowerCase().includes(searchTextToLowerCase);
-				const isFoundInIngredients =
-					recipe.ingredients &&
-					recipe.ingredients.some((ingredient) =>
-						ingredient.ingredient.toLowerCase().includes(searchTextToLowerCase)
-					);
-
-				return isFoundInName || isFoundInDescription || isFoundInIngredients;
-			})
+const filterByTerm = (recipe, searchTextToLowerCase) => {
+	const isFoundInName =
+		recipe.name && recipe.name.toLowerCase().includes(searchTextToLowerCase);
+	const isFoundInDescription =
+		recipe.description &&
+		recipe.description.toLowerCase().includes(searchTextToLowerCase);
+	const isFoundInIngredients =
+		recipe.ingredients &&
+		recipe.ingredients.some((ingredient) =>
+			ingredient.ingredient.toLowerCase().includes(searchTextToLowerCase)
 		);
 
-		if (tags) {
-			tags.forEach((tag) => {
-				filteredRecipes.push(
-					...recipes.filter((recipe) => {
-						const tagToLowerCase = tag.toLowerCase();
-						const isFoundInName =
-							recipe.name && recipe.name.toLowerCase().includes(tagToLowerCase);
-						const isFoundInDescription =
-							recipe.description &&
-							recipe.description.toLowerCase().includes(tagToLowerCase);
-						const isFoundInIngredients =
-							recipe.ingredients &&
-							recipe.ingredients.some((ingredient) =>
-								ingredient.ingredient.toLowerCase().includes(tagToLowerCase)
-							);
+	return isFoundInName || isFoundInDescription || isFoundInIngredients;
+};
 
-						return (
-							isFoundInName || isFoundInDescription || isFoundInIngredients
-						);
-					})
-				);
-			});
+const filterByKeywords = (recipe, keywordsList) => {
+	const recipeKeywords = {
+		ingredient: [
+			...(recipe.ingredients || []).map((ingredient) =>
+				ingredient.ingredient.toLowerCase()
+			),
+		],
+		appliance: [(recipe.appliance || '').toLowerCase()],
+		utensil: [
+			...(recipe.utensils || []).map((utensil) => utensil.toLowerCase()),
+		],
+	};
+
+	for (const category in keywordsList) {
+		if (!keywordsList.hasOwnProperty(category)) {
+			continue;
+		}
+
+		const categoryMatch = keywordsList[category].every((keyword) => {
+			const keywordToLowerCase = keyword.toLowerCase();
+			return recipeKeywords[category].some((recipeKeyword) =>
+				recipeKeyword.includes(keywordToLowerCase)
+			);
+		});
+
+		if (!categoryMatch) {
+			return false;
 		}
 	}
+	return true;
+};
 
-	return Array.from(new Set(filteredRecipes)).flat();
+const searchInRecipes = (searchText, recipes, keywordsList) => {
+	return recipes.filter(
+		(recipe) =>
+			filterByTerm(recipe, searchText) && filterByKeywords(recipe, keywordsList)
+	);
 };
 
 export default searchInRecipes;
