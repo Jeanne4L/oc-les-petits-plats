@@ -1,30 +1,48 @@
-const filterByTerm = (recipe, searchTextToLowerCase) => {
+const compareWithRegex = (value, regex) => {
+	const regexToMatch = new RegExp(regex, 'i');
+	return regexToMatch.test(value);
+};
+
+const filterByTerm = (recipe, searchText) => {
 	const isFoundInName =
-		recipe.name && recipe.name.toLowerCase().includes(searchTextToLowerCase);
+		recipe.name && compareWithRegex(recipe.name, searchText);
 	const isFoundInDescription =
-		recipe.description &&
-		recipe.description.toLowerCase().includes(searchTextToLowerCase);
-	const isFoundInIngredients =
-		recipe.ingredients &&
-		recipe.ingredients.some((ingredient) =>
-			ingredient.ingredient.toLowerCase().includes(searchTextToLowerCase)
-		);
+		recipe.description && compareWithRegex(recipe.description, searchText);
+	let isFoundInIngredients = false;
+	if (recipe.ingredients) {
+		const ingredients = recipe.ingredients;
+		for (let i = 0; i < ingredients.length; i++) {
+			if (compareWithRegex(ingredients[i].ingredient, searchText)) {
+				isFoundInIngredients = true;
+			}
+		}
+	}
 
 	return isFoundInName || isFoundInDescription || isFoundInIngredients;
 };
 
 const filterByKeywords = (recipe, keywordsList) => {
+	const allIngredients = recipe.ingredients;
+	const allAppliances = recipe.appliance;
+	const allUtensils = recipe.utensils;
+
 	const recipeKeywords = {
-		ingredient: [
-			...(recipe.ingredients || []).map((ingredient) =>
-				ingredient.ingredient.toLowerCase()
-			),
-		],
-		appliance: [(recipe.appliance || '').toLowerCase()],
-		utensil: [
-			...(recipe.utensils || []).map((utensil) => utensil.toLowerCase()),
-		],
+		ingredient: [],
+		appliance: [],
+		utensil: [],
 	};
+
+	for (let i = 0; i < allIngredients.length; i++) {
+		const recipeIngredients = allIngredients[i].ingredient;
+		recipeKeywords.ingredient.push(recipeIngredients.toLowerCase());
+	}
+
+	recipeKeywords.appliance.push(allAppliances.toLowerCase());
+
+	for (let i = 0; i < allUtensils.length; i++) {
+		const recipeUtensils = allUtensils[i];
+		recipeKeywords.utensil.push(recipeUtensils.toLowerCase());
+	}
 
 	for (const category in keywordsList) {
 		if (!keywordsList.hasOwnProperty(category)) {
@@ -33,9 +51,12 @@ const filterByKeywords = (recipe, keywordsList) => {
 
 		const categoryMatch = keywordsList[category].every((keyword) => {
 			const keywordToLowerCase = keyword.toLowerCase();
-			return recipeKeywords[category].some((recipeKeyword) =>
-				recipeKeyword.includes(keywordToLowerCase)
-			);
+			const categories = recipeKeywords[category];
+			for (let i = 0; i < categories.length; i++) {
+				if (compareWithRegex(categories[i], keywordToLowerCase)) {
+					return categories[i];
+				}
+			}
 		});
 
 		if (!categoryMatch) {
@@ -46,10 +67,16 @@ const filterByKeywords = (recipe, keywordsList) => {
 };
 
 const searchInRecipes = (searchText, recipes, keywordsList) => {
-	return recipes.filter(
-		(recipe) =>
-			filterByTerm(recipe, searchText) && filterByKeywords(recipe, keywordsList)
-	);
+	const filteredRecipes = [];
+
+	for (let i = 0; i < recipes.length; i++) {
+		if (
+			filterByTerm(recipes[i], searchText) &&
+			filterByKeywords(recipes[i], keywordsList)
+		)
+			filteredRecipes.push(recipes[i]);
+	}
+	return filteredRecipes;
 };
 
 export default searchInRecipes;
