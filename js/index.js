@@ -128,12 +128,18 @@ const filterDropdownOptions = (recipes) => {
 	utensilInput.addEventListener('input', (e) => filterOptions(e));
 };
 
-const closeAllDropdowns = () => {
-	const dropdowns = document.querySelectorAll('.dropdown.expanded-dropdown');
-	dropdowns.forEach((dropdown) => {
-		dropdown.classList.remove('expanded-dropdown');
-		dropdown.querySelector('.top-button').classList.remove('top-button');
-		dropdown.querySelector('.option-search-input').value = '';
+const closeDropdown = (button, dropdown) => {
+	button.classList.remove('top-button');
+	dropdown.classList.remove('expanded-dropdown');
+	dropdown.querySelector('.option-search-input').value = '';
+};
+
+const closeAllDropdownsExcept = (currentButton) => {
+	toggleDropdownButtons.forEach((button) => {
+		if (button !== currentButton) {
+			const dropdown = button.closest('.dropdown');
+			closeDropdown(button, dropdown);
+		}
 	});
 };
 
@@ -185,7 +191,7 @@ const filterRecipesWithKeywords = () => {
 		dropdown.addEventListener('click', (e) => {
 			const option = e.target;
 			if (!isDropdownProcessed && option.classList.contains('option')) {
-				const dropdownCategoryElement = option.closest('ul');
+				const dropdownCategoryElement = option.closest('.dropdown-options');
 
 				if (dropdownCategoryElement) {
 					const optionText = option.innerText;
@@ -230,7 +236,7 @@ filterRecipesWithMainSearchBar();
 toggleDropdownButtons.forEach((button) => {
 	button.addEventListener('click', (e) => {
 		e.stopPropagation();
-		closeAllDropdowns();
+		closeAllDropdownsExcept(button);
 
 		button.classList.toggle('top-button');
 		const dropdown = button.closest('.dropdown');
@@ -240,15 +246,18 @@ toggleDropdownButtons.forEach((button) => {
 });
 
 document.body.addEventListener('click', (e) => {
-	const isDropdownOption = [...e.target.classList].includes('dropdown-option');
-	const isSearchInput = [...e.target.classList].includes('option-search-input');
 	const openedDropdowns = document.querySelectorAll(
 		'.dropdown.expanded-dropdown'
 	);
+	if (!openedDropdowns.length) return;
 
-	if (isDropdownOption || isSearchInput || !openedDropdowns.length) {
-		return;
+	const isDropdownOption = e.target.classList.contains('dropdown-option');
+	const isSearchInput = e.target.classList.contains('option-search-input');
+
+	if (!isDropdownOption && !isSearchInput) {
+		openedDropdowns.forEach((dropdown) => {
+			const button = dropdown.querySelector('.top-button');
+			closeDropdown(button, dropdown);
+		});
 	}
-
-	closeAllDropdowns();
 });
