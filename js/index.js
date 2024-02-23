@@ -128,14 +128,14 @@ const filterDropdownOptions = (recipes) => {
 	utensilInput.addEventListener('input', (e) => filterOptions(e));
 };
 
-function closeAllDropdowns() {
+const closeAllDropdowns = () => {
 	const dropdowns = document.querySelectorAll('.dropdown.expanded-dropdown');
 	dropdowns.forEach((dropdown) => {
 		dropdown.classList.remove('expanded-dropdown');
 		dropdown.querySelector('.top-button').classList.remove('top-button');
 		dropdown.querySelector('.option-search-input').value = '';
 	});
-}
+};
 
 const removeTags = () => {
 	const tagButtons = document.querySelectorAll('.tag button');

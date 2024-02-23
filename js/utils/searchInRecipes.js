@@ -1,13 +1,12 @@
-const filterByTerm = (recipe, searchTextToLowerCase) => {
+const filterByTerm = (recipe, searchText) => {
 	const isFoundInName =
-		recipe.name && recipe.name.toLowerCase().includes(searchTextToLowerCase);
+		recipe.name && recipe.name.toLowerCase().includes(searchText);
 	const isFoundInDescription =
-		recipe.description &&
-		recipe.description.toLowerCase().includes(searchTextToLowerCase);
+		recipe.description && recipe.description.toLowerCase().includes(searchText);
 	const isFoundInIngredients =
 		recipe.ingredients &&
 		recipe.ingredients.some((ingredient) =>
-			ingredient.ingredient.toLowerCase().includes(searchTextToLowerCase)
+			ingredient.ingredient.toLowerCase().includes(searchText)
 		);
 
 	return isFoundInName || isFoundInDescription || isFoundInIngredients;
