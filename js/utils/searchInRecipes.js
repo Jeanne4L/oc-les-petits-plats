@@ -46,12 +46,7 @@ const filterByKeywords = (recipe, keywordsList) => {
 			let categoryMatch = false;
 
 			for (let i = 0; i < recipeComponents.length; i++) {
-				if (
-					compareWithRegex(
-						recipeComponents[i].toLowerCase(),
-						keywordToLowerCase
-					)
-				) {
+				if (recipeComponents[i].toLowerCase() === keywordToLowerCase) {
 					categoryMatch = true;
 					break;
 				}
