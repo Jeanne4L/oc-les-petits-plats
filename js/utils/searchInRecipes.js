@@ -4,17 +4,20 @@ const compareWithRegex = (value, regex) => {
 };
 
 const filterByTerm = (recipe, searchText) => {
-	const isFoundInName =
-		recipe.name && compareWithRegex(recipe.name, searchText);
+	const { name, description, ingredients } = recipe;
+	const isFoundInName = name && compareWithRegex(name, searchText);
 	const isFoundInDescription =
-		recipe.description && compareWithRegex(recipe.description, searchText);
+		description && compareWithRegex(description, searchText);
+
+	if (!ingredients) {
+		return isFoundInName || isFoundInDescription;
+	}
+
 	let isFoundInIngredients = false;
-	if (recipe.ingredients) {
-		const ingredients = recipe.ingredients;
-		for (let i = 0; i < ingredients.length; i++) {
-			if (compareWithRegex(ingredients[i].ingredient, searchText)) {
-				isFoundInIngredients = true;
-			}
+
+	for (let i = 0; i < ingredients.length; i++) {
+		if (compareWithRegex(ingredients[i].ingredient, searchText)) {
+			isFoundInIngredients = true;
 		}
 	}
 
@@ -22,47 +25,44 @@ const filterByTerm = (recipe, searchText) => {
 };
 
 const filterByKeywords = (recipe, keywordsList) => {
-	const allIngredients = recipe.ingredients;
-	const allAppliances = recipe.appliance;
-	const allUtensils = recipe.utensils;
+	const { ingredients, appliance, utensils } = recipe;
+	let recipeIngredients = [];
+
+	for (let i = 0; i < ingredients.length; i++) {
+		recipeIngredients.push(ingredients[i].ingredient);
+	}
 
 	const recipeKeywords = {
-		ingredient: [],
-		appliance: [],
-		utensil: [],
+		ingredient: recipeIngredients,
+		appliance: [appliance],
+		utensil: utensils,
 	};
 
-	for (let i = 0; i < allIngredients.length; i++) {
-		const recipeIngredients = allIngredients[i].ingredient;
-		recipeKeywords.ingredient.push(recipeIngredients.toLowerCase());
-	}
-
-	recipeKeywords.appliance.push(allAppliances.toLowerCase());
-
-	for (let i = 0; i < allUtensils.length; i++) {
-		const recipeUtensils = allUtensils[i];
-		recipeKeywords.utensil.push(recipeUtensils.toLowerCase());
-	}
-
-	for (const category in keywordsList) {
-		if (!keywordsList.hasOwnProperty(category)) {
-			continue;
-		}
-
-		const categoryMatch = keywordsList[category].every((keyword) => {
+	for (let category in keywordsList) {
+		for (let keyword of keywordsList[category]) {
 			const keywordToLowerCase = keyword.toLowerCase();
-			const categories = recipeKeywords[category];
-			for (let i = 0; i < categories.length; i++) {
-				if (compareWithRegex(categories[i], keywordToLowerCase)) {
-					return categories[i];
+			const recipeComponents = recipeKeywords[category];
+
+			let categoryMatch = false;
+
+			for (let i = 0; i < recipeComponents.length; i++) {
+				if (
+					compareWithRegex(
+						recipeComponents[i].toLowerCase(),
+						keywordToLowerCase
+					)
+				) {
+					categoryMatch = true;
+					break;
 				}
 			}
-		});
 
-		if (!categoryMatch) {
-			return false;
+			if (!categoryMatch) {
+				return false;
+			}
 		}
 	}
+
 	return true;
 };
 
