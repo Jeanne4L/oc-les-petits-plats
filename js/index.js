@@ -2,6 +2,7 @@ import { recipes } from '../data/recipes.js';
 import recipeTemplate from './template/recipe.js';
 import createTagElement from './template/tag.js';
 import capitalizeWords from './helpers/capitalizeWords.js';
+import escapeHtml from './helpers/escapeHtml.js';
 import searchInRecipes from './utils/searchInRecipes.js';
 import searchInDropdownOptions from './utils/searchInDropdownOptions.js';
 
@@ -107,15 +108,24 @@ const filterDropdownOptions = (recipes) => {
 
 		switch (id) {
 			case 'search-ingredient':
-				filteredOptions = searchInDropdownOptions(e.target.value, ingredients);
+				filteredOptions = searchInDropdownOptions(
+					escapeHtml(e.target.value),
+					ingredients
+				);
 				createDropdownContent(filteredOptions, ingredientDropdown);
 				break;
 			case 'search-appliance':
-				filteredOptions = searchInDropdownOptions(e.target.value, appliances);
+				filteredOptions = searchInDropdownOptions(
+					escapeHtml(e.target.value),
+					appliances
+				);
 				createDropdownContent(filteredOptions, applianceDropdown);
 				break;
 			case 'search-utensil':
-				filteredOptions = searchInDropdownOptions(e.target.value, utensils);
+				filteredOptions = searchInDropdownOptions(
+					escapeHtml(e.target.value),
+					utensils
+				);
 				createDropdownContent(filteredOptions, utensilDropdown);
 				break;
 			default:
@@ -173,7 +183,7 @@ const filterRecipesWithMainSearchBar = () => {
 		if (e.target.value.length < 3) {
 			searchText = '';
 		} else {
-			searchText = e.target.value;
+			searchText = escapeHtml(e.target.value);
 		}
 
 		filteredRecipes = searchInRecipes(searchText, recipes, tagsList);
