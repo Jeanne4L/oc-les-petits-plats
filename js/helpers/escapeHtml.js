@@ -1,5 +1,6 @@
 const escapeHtml = (value) => {
-	return value.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+	const parsedValue = new DOMParser().parseFromString(value, 'text/html');
+	return parsedValue.documentElement.textContent;
 };
 
 export default escapeHtml;
